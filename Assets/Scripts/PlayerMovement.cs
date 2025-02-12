@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 InputKey;
     float MyFloat;
     
+    
     void Update()
     {
         InputKey = new Vector3(Input.GetAxis("horizontal"), 0, Input.GetAxis("vertical"));
