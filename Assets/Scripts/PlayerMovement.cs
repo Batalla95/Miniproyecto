@@ -2,23 +2,64 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public Rigidbody rB;
-    public Vector3 InputKey;
-    float MyFloat;
-    
-    
-    void Update()
+    public float moveSpeed;
+
+    float horizontalInput;
+    float verticalInput;
+
+    Vector3 moveDirecction;
+
+    Rigidbody rb;
+
+    Quaternion camRotation;
+
+    Vector3 forward;
+    Vector3 right;
+    Vector3 rbRotation;
+
+    private void Start()
     {
-        InputKey = new Vector3(Input.GetAxis("horizontal"), 0, Input.GetAxis("vertical"));
+        rb = GetComponent<Rigidbody>();
+        rb.freezeRotation = true;
+       
+    }
+
+    private void Update()
+    {
+        MyInput();
+        RotationCam();
     }
 
     private void FixedUpdate()
     {
-        rB.MovePosition((Vector3)transform.position + InputKey * 10 * Time.deltaTime);
+        MovePLayer();
 
-        float Angle = Mathf.Atan2(InputKey.x, InputKey.z) * Mathf.Rad2Deg;
-        float Smooth = Mathf.SmoothDampAngle(transform.eulerAngles.y, Angle, ref MyFloat, 0.1f);
+    }
+    private void MyInput()
+    {
+        horizontalInput = Input.GetAxisRaw("horizontal");
+        verticalInput = Input.GetAxisRaw("vertical");
+    }
 
-        transform.rotation=Quaternion.Euler(0, Angle,0);
+    private void RotationCam()
+    {
+        camRotation = Camera.main.transform.rotation;
+        camRotation.eulerAngles = new Vector3(0f, camRotation.eulerAngles.y, 0);
+        rb.rotation = camRotation;
+
+        rbRotation = rb.transform.rotation.eulerAngles;
+        
+    }
+
+
+    private void MovePLayer()
+    {
+        forward = Quaternion.Euler(0f, rbRotation.y, 0f)*Vector3.forward;
+        right = Quaternion.Euler(0f, rbRotation.y, 0f) * Vector3.right;
+        Vector3 rotation = rb.transform.rotation.eulerAngles;
+
+        moveDirecction = forward * verticalInput + right * horizontalInput;
+
+        rb.AddForce(moveDirecction.normalized * moveSpeed * 10f, ForceMode.Force);
     }
 }
