@@ -12,6 +12,11 @@ public class PlayerMovement : MonoBehaviour
     public float airMultiplier;
     bool readyToJump=true;
 
+    public float dashForce;
+    public float dashCooldown;
+    bool readyToDash = true;
+    bool speedControlControl = true;
+
     [Header("Ground Check")]
     public float playerHeight;
     public LayerMask whatIsGround;
@@ -19,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
+    public KeyCode dashKey = KeyCode.LeftShift;
 
     float horizontalInput;
     float verticalInput;
@@ -45,7 +51,12 @@ public class PlayerMovement : MonoBehaviour
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
         MyInput();
         RotationCam();
-        speedControl();
+        if (speedControlControl)
+        {
+            SpeedControl();
+        }
+        
+        
 
         if (grounded)
         {
@@ -75,6 +86,20 @@ public class PlayerMovement : MonoBehaviour
 
             Invoke(nameof(ResetJump), jumpCooldown);
         }
+
+        if (Input.GetKey(dashKey) && readyToDash)
+        {
+            speedControlControl = false;
+            
+            readyToDash = false;
+
+            Dash();
+
+           
+
+            Invoke(nameof(ResetDash), dashCooldown);
+            Invoke(nameof(ResetSpeedControl), 0.5f);
+        }
     }
 
     private void RotationCam()
@@ -99,7 +124,7 @@ public class PlayerMovement : MonoBehaviour
         rb.AddForce(moveDirecction.normalized * moveSpeed * 10f, ForceMode.Force);
     }
 
-    private void speedControl()
+    private void SpeedControl()
     {
         Vector3 flatVel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
 
@@ -108,6 +133,7 @@ public class PlayerMovement : MonoBehaviour
             Vector3 limitedVel = flatVel.normalized * moveSpeed;
             rb.linearVelocity = new Vector3(limitedVel.x, rb.linearVelocity.y, limitedVel.z);
         }
+        
     }
 
     private void Jump()
@@ -121,5 +147,27 @@ public class PlayerMovement : MonoBehaviour
         readyToJump = true;
     }
 
-  
+    private void Dash()
+    {
+        forward = Quaternion.Euler(0f, rbRotation.y, 0f) * Vector3.forward;
+        right = Quaternion.Euler(0f, rbRotation.y, 0f) * Vector3.right;
+
+        moveDirecction = forward * verticalInput + right * horizontalInput;
+
+        
+        rb.AddForce(moveDirecction.normalized* dashForce, ForceMode.Impulse);
+    }
+
+    private void ResetDash()
+    {
+        readyToDash = true;
+        
+    }
+
+    private void ResetSpeedControl()
+    {
+        speedControlControl = true;
+    }
+
+
 }

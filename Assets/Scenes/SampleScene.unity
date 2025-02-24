@@ -924,12 +924,15 @@ MonoBehaviour:
   jumpForce: 7
   jumpCooldown: 0.5
   airMultiplier: 3
+  dashForce: 3
+  dashCooldown: 2.5
   playerHeight: 2
   whatIsGround:
     serializedVersion: 2
     m_Bits: 64
   grounded: 0
   jumpKey: 32
+  dashKey: 304
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
