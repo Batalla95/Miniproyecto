@@ -5,26 +5,89 @@ using System;
 
 public class DamageGun : MonoBehaviour
 {
-    List<String> Enemies=new List<String>();
+   
 
     public float Damage;
     public float BulletRange;
-    private Transform PlayerCamera;
-    void Start()
-    {
-        PlayerCamera = Camera.main.transform;
-    }
+    public Transform GunTransform;
+    
+    [SerializeField]
+    private List<Entity> enemyIsInRange = new List<Entity>();
+   
 
     // Update is called once per frame
   public void Shoot()
     {
-        Ray gunRay = new Ray(PlayerCamera.position, PlayerCamera.forward);
-        if(Physics.Raycast(gunRay, out RaycastHit hitInfo, BulletRange))
+        if (enemyIsInRange.Count > 0)
         {
-            if(hitInfo.collider.gameObject.TryGetComponent(out Entity enemy))
+            Entity closestEnemy = GetClosestEnemy();
+
+            RaycastHit hit;
+
+            Vector3 direction = (closestEnemy.transform.position - GunTransform.position).normalized;
+
+            if(Physics.Raycast(GunTransform.position,direction,out hit, BulletRange))
             {
-                enemy.Health -= Damage;
+                if (hit.collider.GetComponent<Entity>())
+                {
+                    closestEnemy.Health -= Damage;
+                    if (closestEnemy.Health <= 0)
+                    {
+                        if (closestEnemy != null)
+                        {
+                            enemyIsInRange.Remove(closestEnemy);
+                            Debug.Log("El enemigo ha salido");
+
+                        }
+                    }
+                }
             }
+        }
+    }
+
+
+    Entity GetClosestEnemy()
+    {
+        Entity closestEnemy = null;
+
+        float minDistance = float.MaxValue;
+
+        foreach(Entity enemy in enemyIsInRange)
+        {
+            float distance = Vector3.Distance(GunTransform.position, enemy.transform.position);
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+                closestEnemy = enemy;
+            }
+        }
+
+        return closestEnemy;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        
+        Entity enemy = other.gameObject.GetComponent<Entity>();
+
+        if (enemy != null)
+        {
+            
+                enemyIsInRange.Add(enemy);
+                Debug.Log("Enemigo detectado y añadido a la lista");
+            
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        Entity enemy = other.gameObject.GetComponent<Entity>();
+
+        if (enemy != null)
+        {
+            enemyIsInRange.Remove(enemy);
+            Debug.Log("El enemigo ha salido");
+
         }
     }
 }

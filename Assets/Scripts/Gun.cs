@@ -19,7 +19,7 @@ public class Gun : MonoBehaviour
     {
         if (Automatic)
         {
-            if (Input.GetMouseButton(0))
+            if (Input.GetButtonDown("Fire1"))
             {
                 if (CurrentCooldown <= 0)
                 {
@@ -30,7 +30,7 @@ public class Gun : MonoBehaviour
         }
         else
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetButtonDown("Fire1"))
             {
                 if (CurrentCooldown <= 0)
                 {
