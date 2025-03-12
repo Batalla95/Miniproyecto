@@ -221,7 +221,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97f9a3c26ca6c8a43ab04f9bbcd2b81b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Damage: 1
+  Damage: 10
   BulletRange: 6
   GunTransform: {fileID: 201108303}
   enemyIsInRange: []
@@ -252,12 +252,12 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  FireCooldown: 0.1
-  RechargeCooldown: 0
+  FireCooldown: 1
+  RechargeCooldown: 3
   MaxAmmo: 20
-  MaxMag: 20
+  MaxMag: 1
   Automatic: 1
-  InfinityAmmo: 1
+  InfinityAmmo: 0
   CurrentMaxAmmo: 0
   CurrentMaxMag: 0
 --- !u!65 &201108309

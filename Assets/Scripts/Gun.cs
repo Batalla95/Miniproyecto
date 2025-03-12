@@ -11,6 +11,7 @@ public class Gun : MonoBehaviour
 
     public bool Automatic;
     public bool InfinityAmmo;
+    private bool isReloading=false;
 
     private float CurrentCooldown;
     private float CurrentRecharge;
@@ -30,10 +31,14 @@ public class Gun : MonoBehaviour
     private void Update()
     {
 
+        
+
         if (Input.GetKeyDown(KeyCode.R)||CurrentMaxMag==0)
         {
             Recharge();
-            CurrentCooldown = CurrentRecharge;
+            isReloading = true;
+            Invoke(nameof(isReloadingReset), CurrentRecharge);
+            
         }
         
         
@@ -41,7 +46,7 @@ public class Gun : MonoBehaviour
         {
             if (Input.GetButton("Fire1"))
             {
-                if (CurrentCooldown <= 0 && CurrentMaxMag>0)
+                if (CurrentCooldown <= 0 && CurrentMaxMag>0 && !isReloading)
                 {
                     OnGunShoot?.Invoke();
                     CurrentCooldown = FireCooldown;
@@ -55,7 +60,7 @@ public class Gun : MonoBehaviour
         {
             if (Input.GetButtonDown("Fire1"))
             {
-                if (CurrentCooldown <= 0 && CurrentMaxMag > 0)
+                if (CurrentCooldown <= 0 && CurrentMaxMag > 0 && !isReloading)
                 {
                     OnGunShoot?.Invoke();
                     CurrentCooldown = FireCooldown;
@@ -65,7 +70,7 @@ public class Gun : MonoBehaviour
             }
         }
         CurrentCooldown -= Time.deltaTime;
-        CurrentRecharge -= Time.deltaTime;
+        
     }
 
 
@@ -80,5 +85,10 @@ public class Gun : MonoBehaviour
             CurrentMaxAmmo -= MaxMag;
             CurrentMaxMag = MaxMag;
         }
+    }
+
+    public void isReloadingReset()
+    {
+        isReloading = false;
     }
 }
