@@ -221,7 +221,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97f9a3c26ca6c8a43ab04f9bbcd2b81b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Damage: 5
+  Damage: 1
   BulletRange: 6
   GunTransform: {fileID: 201108303}
   enemyIsInRange: []
@@ -252,8 +252,14 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  FireCooldown: 1
+  FireCooldown: 0.1
+  RechargeCooldown: 0
+  MaxAmmo: 20
+  MaxMag: 20
   Automatic: 1
+  InfinityAmmo: 1
+  CurrentMaxAmmo: 0
+  CurrentMaxMag: 0
 --- !u!65 &201108309
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -964,6 +970,7 @@ GameObject:
   - component: {fileID: 831663574}
   - component: {fileID: 831663577}
   - component: {fileID: 831663578}
+  - component: {fileID: 831663579}
   m_Layer: 0
   m_Name: PlayerObj
   m_TagString: Untagged
@@ -1117,6 +1124,20 @@ MonoBehaviour:
   grounded: 0
   jumpKey: 32
   dashKey: 304
+--- !u!114 &831663579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 831663572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6bbdb43d5f365347bbaaf24c26dd175, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StartingHealth: 4
+  health: 0
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
