@@ -255,7 +255,7 @@ MonoBehaviour:
   FireCooldown: 1
   RechargeCooldown: 3
   MaxAmmo: 20
-  MaxMag: 1
+  MaxMag: 10
   Automatic: 1
   InfinityAmmo: 0
   CurrentMaxAmmo: 0
@@ -1960,7 +1960,7 @@ MonoBehaviour:
   walkPointRange: 5
   timeBetweenAttacks: 5
   sightRange: 8
-  attackRange: 0
+  attackRange: 1
   playerIsInSightRange: 0
   playerIsInAttackRange: 0
 --- !u!195 &2045976566
