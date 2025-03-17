@@ -27,7 +27,7 @@ public class EnemyAi : MonoBehaviour
 
     private void Awake()
     {
-        player = GameObject.Find("Player").transform;
+        player = GameObject.Find("PlayerObj").transform;
         agent = GetComponent<NavMeshAgent>();
     }
 
@@ -62,6 +62,7 @@ public class EnemyAi : MonoBehaviour
 
         if (walkPointSet)
         {
+            Debug.Log("ola3");
             agent.SetDestination(walkPoint);
         }
 
@@ -88,12 +89,13 @@ public class EnemyAi : MonoBehaviour
 
     private void ChasePlayer()
     {
+        Debug.Log("ola");
         agent.SetDestination(player.position);
     }
 
     private void AttackPlayer()
     {
-        agent.SetDestination(transform.position);
+        //agent.SetDestination(transform.position);
         transform.LookAt(player);
 
         if (!alreadyAttacked)
