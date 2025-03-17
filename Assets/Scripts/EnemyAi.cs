@@ -1,0 +1,124 @@
+using UnityEngine;
+using UnityEngine.AI;
+
+public class EnemyAi : MonoBehaviour
+{
+    public NavMeshAgent agent;
+
+    public Transform player;
+
+    public PlayerHealth health;
+
+    public LayerMask whatIsGround;
+    public LayerMask whatIsPlayer;
+
+    public Vector3 walkPoint;
+    bool walkPointSet;
+    public float walkPointRange;
+
+    public float timeBetweenAttacks;
+    bool alreadyAttacked;
+
+    public float sightRange;
+    public float attackRange;
+
+    public bool playerIsInSightRange;
+    public bool playerIsInAttackRange;
+
+    private void Awake()
+    {
+        player = GameObject.Find("Player").transform;
+        agent = GetComponent<NavMeshAgent>();
+    }
+
+
+    private void Update()
+    {
+        playerIsInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
+        playerIsInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
+
+        if (!playerIsInSightRange && !playerIsInAttackRange)
+        {
+            Patroling();
+        }
+        if (playerIsInSightRange && !playerIsInAttackRange)
+        {
+            ChasePlayer();
+        }
+        if (playerIsInSightRange && playerIsInAttackRange)
+        {
+            AttackPlayer();
+        }
+
+    }
+
+
+    private void Patroling()
+    {
+        if (!walkPointSet)
+        {
+            SearchWalkPoint();
+        }
+
+        if (walkPointSet)
+        {
+            agent.SetDestination(walkPoint);
+        }
+
+        Vector3 distanceToWalkPoint = transform.position - walkPoint;
+
+        if (distanceToWalkPoint.magnitude < 1f)
+        {
+            walkPointSet = false;
+        }
+    }
+
+    private void SearchWalkPoint()
+    {
+        float ramdomZ = Random.Range(-walkPointRange, walkPointRange);
+        float ramdomX = Random.Range(-walkPointRange, walkPointRange);
+
+        walkPoint = new Vector3(transform.position.x + ramdomX, transform.position.y, transform.position.z + ramdomZ);
+
+        if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
+        {
+            walkPointSet = true;
+        }
+    }
+
+    private void ChasePlayer()
+    {
+        agent.SetDestination(player.position);
+    }
+
+    private void AttackPlayer()
+    {
+        agent.SetDestination(transform.position);
+        transform.LookAt(player);
+
+        if (!alreadyAttacked)
+        {
+            health.Health -= 1;
+            alreadyAttacked = true;
+            Invoke(nameof(ResetAttack), timeBetweenAttacks);
+        }
+    }
+
+    private void ResetAttack()
+    {
+        alreadyAttacked = false;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
