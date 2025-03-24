@@ -6,6 +6,8 @@ public class PlayerMovement : MonoBehaviour
     public float moveSpeed;
 
     public float groundDrag;
+    public float rayHeight;
+    
 
     public float jumpForce;
     public float jumpCooldown;
@@ -39,6 +41,8 @@ public class PlayerMovement : MonoBehaviour
     Vector3 right;
     Vector3 rbRotation;
 
+    AnimatorController animatorController;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -46,12 +50,13 @@ public class PlayerMovement : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-       
+
+        animatorController = GetComponent<AnimatorController>();
     }
 
     private void Update()
     {
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
+        grounded = Physics.Raycast(transform.position+Vector3.up*rayHeight, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
         MyInput();
         RotationCam();
         if (speedControlControl)
@@ -69,6 +74,8 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.linearDamping = 0;
         }
+
+        animatorController.UpdateGround(grounded);
     }
 
     private void FixedUpdate()
@@ -172,5 +179,10 @@ public class PlayerMovement : MonoBehaviour
         speedControlControl = true;
     }
 
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawRay(transform.position, Vector3.down * (playerHeight * 0.5f + 0.2f));
+    }
 
 }
