@@ -8,6 +8,8 @@ public class AnimatorController : MonoBehaviour
     [Header("Animator variables")]
     public string speedVariable = "Speed";
     public string isGroundVariable = "IsGrounded";
+    public string isHorizontalVariable = "isHorizontal";
+    public string isVerticalVariable = "isVertical";
 
     private float horizontal;
     private float vertical;
@@ -28,9 +30,14 @@ public class AnimatorController : MonoBehaviour
         horizontal = Input.GetAxisRaw("horizontal");
         vertical = Input.GetAxisRaw("vertical");
 
+        
+
+
         speed = Mathf.Abs(horizontal + vertical);
 
         playerAnimator.SetFloat(speedVariable, speed);
+        playerAnimator.SetFloat(isHorizontalVariable, horizontal);
+        playerAnimator.SetFloat(isVerticalVariable, vertical);
     }
 
     public void UpdateGround(bool IsGrounded)

@@ -10,6 +10,8 @@ public class DamageGun : MonoBehaviour
     public float Damage;
     public float BulletRange;
     public Transform GunTransform;
+
+
     
     [SerializeField]
     private List<Entity> enemyIsInRange = new List<Entity>();
@@ -22,14 +24,14 @@ public class DamageGun : MonoBehaviour
         {
             Entity closestEnemy = GetClosestEnemy();
 
-            RaycastHit hit;
+            
 
-            Vector3 direction = (closestEnemy.transform.position - GunTransform.position).normalized;
+            Vector3 direction = (closestEnemy.transform.position - GunTransform.position);
 
-            if(Physics.Raycast(GunTransform.position,direction,out hit, BulletRange))
-            {
-                if (hit.collider.GetComponent<Entity>())
+           
+                if (closestEnemy.GetComponent<Entity>())
                 {
+                    Debug.Log("Toma mamon");
                     closestEnemy.Health -= Damage;
                     if (closestEnemy.Health <= 0)
                     {
@@ -41,7 +43,7 @@ public class DamageGun : MonoBehaviour
                         }
                     }
                 }
-            }
+            
         }
     }
 
@@ -75,6 +77,7 @@ public class DamageGun : MonoBehaviour
             
                 enemyIsInRange.Add(enemy);
                 Debug.Log("Enemigo detectado y añadido a la lista");
+            enemy.target.SetActive(true);
             
         }
     }
@@ -87,7 +90,7 @@ public class DamageGun : MonoBehaviour
         {
             enemyIsInRange.Remove(enemy);
             Debug.Log("El enemigo ha salido");
-
+            enemy.target.SetActive(false);
         }
     }
 }

@@ -5,6 +5,7 @@ public class Entity : MonoBehaviour
     [SerializeField] private float StartingHealth;
 
     public float health;
+    public GameObject target;
 
     public float Health
     {

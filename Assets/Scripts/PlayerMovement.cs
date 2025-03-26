@@ -7,7 +7,9 @@ public class PlayerMovement : MonoBehaviour
 
     public float groundDrag;
     public float rayHeight;
-    
+
+    public GameObject[] Weapon;
+    private int currentWeaponIndex = 0;
 
     public float jumpForce;
     public float jumpCooldown;
@@ -52,6 +54,10 @@ public class PlayerMovement : MonoBehaviour
         Cursor.visible = false;
 
         animatorController = GetComponent<AnimatorController>();
+
+        SwitchWeapon(0);
+
+        
     }
 
     private void Update()
@@ -109,6 +115,15 @@ public class PlayerMovement : MonoBehaviour
 
             Invoke(nameof(ResetDash), dashCooldown);
             Invoke(nameof(ResetSpeedControl), 0.5f);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            SwitchWeapon(0); 
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            SwitchWeapon(1); 
         }
     }
 
@@ -183,6 +198,21 @@ public class PlayerMovement : MonoBehaviour
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawRay(transform.position, Vector3.down * (playerHeight * 0.5f + 0.2f));
+    }
+
+    private void SwitchWeapon(int index)
+    {
+        if (index < 0 || index > Weapon.Length)
+        {
+            return;
+        }
+
+        foreach (GameObject weapon in Weapon)
+        {
+            weapon.SetActive(false);
+        }
+        Weapon[index].SetActive(true);
+        currentWeaponIndex = index;
     }
 
 }
