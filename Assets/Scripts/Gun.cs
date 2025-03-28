@@ -18,6 +18,14 @@ public class Gun : MonoBehaviour
     [SerializeField] private float CurrentMaxAmmo;
     [SerializeField] private float CurrentMaxMag;
 
+    public GameObject gunFlash;
+
+    [SerializeField]
+    private AudioSource GunAudio;
+    public AudioClip shoot;
+    public AudioClip recharge;
+    
+    
 
     private void Start()
     {
@@ -25,6 +33,8 @@ public class Gun : MonoBehaviour
         CurrentRecharge = RechargeCooldown;
         CurrentMaxAmmo = MaxAmmo;
         CurrentMaxMag = MaxMag;
+        gunFlash.SetActive(false);
+        
         
     }
 
@@ -38,6 +48,7 @@ public class Gun : MonoBehaviour
             Recharge();
             isReloading = true;
             Invoke(nameof(isReloadingReset), CurrentRecharge);
+            GunAudio.PlayOneShot(recharge);
             
         }
         
@@ -49,9 +60,13 @@ public class Gun : MonoBehaviour
                 if (CurrentCooldown <= 0 && CurrentMaxMag>0 && !isReloading)
                 {
                     OnGunShoot?.Invoke();
+                    gunFlash.SetActive(true);
                     CurrentCooldown = FireCooldown;
                     CurrentMaxMag -= 1;
+                    GunAudio.PlayOneShot(shoot);
+                    Invoke(nameof(SetOffGunFlash), 0.5f);
                     
+
                 }
                
             }
@@ -63,8 +78,12 @@ public class Gun : MonoBehaviour
                 if (CurrentCooldown <= 0 && CurrentMaxMag > 0 && !isReloading)
                 {
                     OnGunShoot?.Invoke();
+                    gunFlash.SetActive(true);
                     CurrentCooldown = FireCooldown;
                     CurrentMaxMag -= 1;
+                    Invoke(nameof(SetOffGunFlash), 0.5f);
+                    GunAudio.PlayOneShot(shoot);
+
                 }
                 
             }
@@ -90,5 +109,10 @@ public class Gun : MonoBehaviour
     public void isReloadingReset()
     {
         isReloading = false;
+    }
+
+    public void SetOffGunFlash()
+    {
+        gunFlash.SetActive(false);
     }
 }

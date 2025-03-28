@@ -9,6 +9,9 @@ public class EnemyAi : MonoBehaviour
 
     public PlayerHealth health;
 
+    public Entity enemyHealth;
+    
+
     public LayerMask whatIsGround;
     public LayerMask whatIsPlayer;
 
@@ -24,11 +27,16 @@ public class EnemyAi : MonoBehaviour
 
     public bool playerIsInSightRange;
     public bool playerIsInAttackRange;
+    public bool attack;
+
+    public EnemyController enemyController;
 
     private void Awake()
     {
         
         agent = GetComponent<NavMeshAgent>();
+        enemyController = GetComponent<EnemyController>();
+        enemyHealth = GetComponent<Entity>();
     }
 
 
@@ -37,18 +45,23 @@ public class EnemyAi : MonoBehaviour
         playerIsInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
         playerIsInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
-        if (!playerIsInSightRange && !playerIsInAttackRange)
+        if (!playerIsInSightRange && !playerIsInAttackRange && enemyHealth.health>0)
         {
             Patroling();
+            enemyController.UpdateAttack(playerIsInAttackRange);
         }
-        if (playerIsInSightRange && !playerIsInAttackRange)
+        if (playerIsInSightRange && !playerIsInAttackRange && enemyHealth.health > 0)
         {
             ChasePlayer();
+            enemyController.UpdateAttack(playerIsInAttackRange);
         }
-        if (playerIsInSightRange && playerIsInAttackRange)
+        if (playerIsInSightRange && playerIsInAttackRange && enemyHealth.health>0)
         {
             AttackPlayer();
+            
         }
+
+       
 
     }
 
@@ -91,18 +104,21 @@ public class EnemyAi : MonoBehaviour
     {
         
         agent.SetDestination(player.position);
+       
     }
 
     private void AttackPlayer()
     {
         agent.SetDestination(transform.position);
         transform.LookAt(player);
+        enemyController.UpdateAttack(playerIsInAttackRange);
 
         if (!alreadyAttacked)
         {
             health.Health -= 1;
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
+            
         }
     }
 
@@ -111,6 +127,12 @@ public class EnemyAi : MonoBehaviour
         alreadyAttacked = false;
     }
 
+    public void EliminateEnemy()
+    {
+        Destroy(gameObject);
+    }
+
+    
 
 
 
