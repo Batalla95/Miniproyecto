@@ -6,6 +6,8 @@ public class PlayerHealth : MonoBehaviour
 
     public float health;
 
+    public GameObject player;
+
     public float Health
     {
         get
@@ -19,7 +21,8 @@ public class PlayerHealth : MonoBehaviour
 
             if (health <= 0f)
             {
-                Destroy(gameObject);
+                Health = StartingHealth;
+                player.transform.position=SpawnCreate.spawnPoint.position;
             }
         }
     }
