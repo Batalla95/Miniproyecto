@@ -113,10 +113,11 @@ public class EnemyAi : MonoBehaviour
         agent.SetDestination(transform.position);
         transform.LookAt(player);
         enemyController.UpdateAttack(playerIsInAttackRange);
+        
 
         if (!alreadyAttacked)
         {
-            health.Health -= damage;
+            Invoke(nameof(DamagePlayer), 1.5f);
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
             
@@ -131,6 +132,11 @@ public class EnemyAi : MonoBehaviour
     public void EliminateEnemy()
     {
         Destroy(gameObject);
+    }
+
+    public void DamagePlayer()
+    {
+        health.Health -= damage;
     }
 
     
