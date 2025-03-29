@@ -16,8 +16,8 @@ public class Gun : MonoBehaviour
 
     private float CurrentCooldown;
     private float CurrentRecharge;
-    [SerializeField] private float CurrentMaxAmmo;
-    [SerializeField] private float CurrentMaxMag;
+    [SerializeField] public float CurrentMaxAmmo;
+    [SerializeField] public float CurrentMaxMag;
 
     public GameObject gunFlash;
 
@@ -98,6 +98,10 @@ public class Gun : MonoBehaviour
         if (isReloading)
         {
             ammo.text = "Reloading...";
+        }
+        if (CurrentMaxAmmo > MaxAmmo)
+        {
+            CurrentMaxAmmo = MaxAmmo;
         }
 
     }

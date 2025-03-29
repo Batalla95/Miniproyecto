@@ -18,7 +18,7 @@ public class MessageManager : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Invoke(nameof(CloseText), 3f);
+            Invoke(nameof(CloseText), 2f);
         }
     }
 

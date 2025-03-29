@@ -117,7 +117,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   FireCooldown: 0.5
-  RechargeCooldown: 3
+  RechargeCooldown: 2
   MaxAmmo: 90
   MaxMag: 30
   Automatic: 1
@@ -128,6 +128,7 @@ MonoBehaviour:
   GunAudio: {fileID: 3031366551272258578}
   shoot: {fileID: 8300000, guid: 0a077e9ec74e65c4c9762ff9391ac8d8, type: 3}
   recharge: {fileID: 8300000, guid: 08e05080610bca0419070756cb3b87f7, type: 3}
+  ammo: {fileID: 0}
 --- !u!114 &2528797978959759957
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,7 +141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97f9a3c26ca6c8a43ab04f9bbcd2b81b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Damage: 2
+  Damage: 5
   BulletRange: 0
   GunTransform: {fileID: 7962348336787956598}
   enemyIsInRange: []
@@ -325,9 +326,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  FireCooldown: 1.5
-  RechargeCooldown: 3
-  MaxAmmo: 200
+  FireCooldown: 1
+  RechargeCooldown: 2
+  MaxAmmo: 100
   MaxMag: 20
   Automatic: 0
   InfinityAmmo: 0
@@ -337,6 +338,7 @@ MonoBehaviour:
   GunAudio: {fileID: 2019045622708421295}
   shoot: {fileID: 8300000, guid: 0c5b0ffaf0e9b1a4ba4fea9c2d234b8a, type: 3}
   recharge: {fileID: 8300000, guid: 08e05080610bca0419070756cb3b87f7, type: 3}
+  ammo: {fileID: 0}
 --- !u!114 &8236749586456749642
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -349,7 +351,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97f9a3c26ca6c8a43ab04f9bbcd2b81b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Damage: 3
+  Damage: 10
   BulletRange: 0
   GunTransform: {fileID: 7230480207847783257}
   enemyIsInRange: []
@@ -957,6 +959,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartingHealth: 100
   health: 0
+  player: {fileID: 0}
+  vida: {fileID: 0}
 --- !u!208 &2502746776368903791
 NavMeshObstacle:
   m_ObjectHideFlags: 0

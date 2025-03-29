@@ -21,6 +21,7 @@ public class EnemyAi : MonoBehaviour
 
     public float timeBetweenAttacks;
     bool alreadyAttacked;
+    public float damage;
 
     public float sightRange;
     public float attackRange;
@@ -115,7 +116,7 @@ public class EnemyAi : MonoBehaviour
 
         if (!alreadyAttacked)
         {
-            health.Health -= 1;
+            health.Health -= damage;
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
             

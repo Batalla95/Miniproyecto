@@ -29,6 +29,11 @@ public class PlayerHealth : MonoBehaviour
                
             }
 
+            if (health > 100)
+            {
+                health = 100;
+            }
+
             if (vida != null)
             {
                 vida.text = health + "/" + StartingHealth;
