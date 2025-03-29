@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using UnityEngine.UI;
 public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] private float StartingHealth;
@@ -7,6 +7,8 @@ public class PlayerHealth : MonoBehaviour
     public float health;
 
     public GameObject player;
+
+    public TMPro.TMP_Text vida;
 
     public float Health
     {
@@ -22,8 +24,16 @@ public class PlayerHealth : MonoBehaviour
             if (health <= 0f)
             {
                 Health = StartingHealth;
-                player.transform.position=SpawnCreate.spawnPoint.position;
+                player.transform.position = SpawnCreate.spawnPoint.position;
+
+               
             }
+
+            if (vida != null)
+            {
+                vida.text = health + "/" + StartingHealth;
+            }
+
         }
     }
 

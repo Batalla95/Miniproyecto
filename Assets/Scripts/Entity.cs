@@ -22,6 +22,7 @@ public class Entity : MonoBehaviour
             if (health <= 0f)
             {
                 enemyController.Death(true);
+                WaveControl.damageCounter++;
                 Invoke(nameof(Eliminate), 3.5f);
             }
         }
@@ -35,7 +36,8 @@ public class Entity : MonoBehaviour
 
     public void Eliminate()
     {
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
+
 
 }

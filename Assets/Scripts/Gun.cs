@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class Gun : MonoBehaviour
 {
@@ -24,8 +25,9 @@ public class Gun : MonoBehaviour
     private AudioSource GunAudio;
     public AudioClip shoot;
     public AudioClip recharge;
-    
-    
+
+    public TMPro.TMP_Text ammo;
+
 
     private void Start()
     {
@@ -89,7 +91,15 @@ public class Gun : MonoBehaviour
             }
         }
         CurrentCooldown -= Time.deltaTime;
-        
+        if (ammo != null)
+        {
+            ammo.text = CurrentMaxMag +"/" + CurrentMaxAmmo; 
+        }
+        if (isReloading)
+        {
+            ammo.text = "Reloading...";
+        }
+
     }
 
 
@@ -101,7 +111,7 @@ public class Gun : MonoBehaviour
         }
         else if(CurrentMaxAmmo>0)
         {
-            CurrentMaxAmmo -= MaxMag;
+            CurrentMaxAmmo -= MaxMag-CurrentMaxMag;
             CurrentMaxMag = MaxMag;
         }
     }
