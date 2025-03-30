@@ -11,8 +11,11 @@ public class DamageGun : MonoBehaviour
     public float BulletRange;
     public Transform GunTransform;
 
+    public AudioSource enemyDamage;
+    public AudioClip enemyDamageClip;
 
-    
+
+
     [SerializeField]
     private List<Entity> enemyIsInRange = new List<Entity>();
    
@@ -31,14 +34,14 @@ public class DamageGun : MonoBehaviour
            
                 if (closestEnemy.GetComponent<Entity>())
                 {
-                    Debug.Log("Toma mamon");
+                enemyDamage.PlayOneShot(enemyDamageClip);
                     closestEnemy.Health -= Damage;
                     if (closestEnemy.Health <= 0)
                     {
                         if (closestEnemy != null)
                         {
                             enemyIsInRange.Remove(closestEnemy);
-                            Debug.Log("El enemigo ha salido");
+                           
 
                         }
                     }
@@ -76,7 +79,7 @@ public class DamageGun : MonoBehaviour
         {
             
                 enemyIsInRange.Add(enemy);
-                Debug.Log("Enemigo detectado y añadido a la lista");
+                
             enemy.target.SetActive(true);
             
         }
@@ -89,7 +92,7 @@ public class DamageGun : MonoBehaviour
         if (enemy != null)
         {
             enemyIsInRange.Remove(enemy);
-            Debug.Log("El enemigo ha salido");
+           
             enemy.target.SetActive(false);
         }
     }

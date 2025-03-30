@@ -13,10 +13,14 @@ public class MineBehaviour : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        audioSource.PlayOneShot(preExplosion);
-        Invoke(nameof(Explosion), 2f);
-        Invoke(nameof(DestroyMine), 4f);
-        playerInRange = true;
+        if (other.CompareTag("Player"))
+        {
+            audioSource.PlayOneShot(preExplosion);
+            Invoke(nameof(Explosion), 2f);
+            Invoke(nameof(DestroyMine), 4f);
+            playerInRange = true;
+        }
+        
         
         
 
@@ -24,7 +28,8 @@ public class MineBehaviour : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        playerInRange = false;
+        if (other.CompareTag("Player"))
+            playerInRange = false;
     }
 
     public void DestroyMine()

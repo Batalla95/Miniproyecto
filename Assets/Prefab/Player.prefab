@@ -126,7 +126,7 @@ MonoBehaviour:
   CurrentMaxMag: 0
   gunFlash: {fileID: 6128732290809344056}
   GunAudio: {fileID: 3031366551272258578}
-  shoot: {fileID: 8300000, guid: 0a077e9ec74e65c4c9762ff9391ac8d8, type: 3}
+  shoot: {fileID: 8300000, guid: 5038270528789ee47b2ba988e9438d3d, type: 3}
   recharge: {fileID: 8300000, guid: 08e05080610bca0419070756cb3b87f7, type: 3}
   ammo: {fileID: 0}
 --- !u!114 &2528797978959759957
@@ -141,9 +141,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97f9a3c26ca6c8a43ab04f9bbcd2b81b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Damage: 5
+  Damage: 10
   BulletRange: 0
   GunTransform: {fileID: 7962348336787956598}
+  enemyDamage: {fileID: 0}
+  enemyDamageClip: {fileID: 8300000, guid: 5aae1d9387b6976468811c01203b6cbd, type: 3}
   enemyIsInRange: []
 --- !u!82 &3031366551272258578
 AudioSource:
@@ -336,7 +338,7 @@ MonoBehaviour:
   CurrentMaxMag: 0
   gunFlash: {fileID: 7064043861354334136}
   GunAudio: {fileID: 2019045622708421295}
-  shoot: {fileID: 8300000, guid: 0c5b0ffaf0e9b1a4ba4fea9c2d234b8a, type: 3}
+  shoot: {fileID: 8300000, guid: 4b87c605053f67843b97d2a9a66cacda, type: 3}
   recharge: {fileID: 8300000, guid: 08e05080610bca0419070756cb3b87f7, type: 3}
   ammo: {fileID: 0}
 --- !u!114 &8236749586456749642
@@ -351,9 +353,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97f9a3c26ca6c8a43ab04f9bbcd2b81b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Damage: 10
+  Damage: 20
   BulletRange: 0
   GunTransform: {fileID: 7230480207847783257}
+  enemyDamage: {fileID: 0}
+  enemyDamageClip: {fileID: 8300000, guid: 5aae1d9387b6976468811c01203b6cbd, type: 3}
   enemyIsInRange: []
 --- !u!82 &2019045622708421295
 AudioSource:
@@ -877,7 +881,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb0e4572494939449b2d91280b0c51de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 7
+  moveSpeed: 14
   groundDrag: 1
   rayHeight: 3
   Weapon:
@@ -886,7 +890,7 @@ MonoBehaviour:
   jumpForce: 8
   jumpCooldown: 1
   airMultiplier: 3
-  dashForce: 3
+  dashForce: 4
   dashCooldown: 2
   playerHeight: 6
   whatIsGround:

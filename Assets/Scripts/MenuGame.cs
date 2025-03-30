@@ -9,6 +9,7 @@ public class MenuGame : MonoBehaviour
 
     public void Start()
     {
+
         gameMenu.SetActive(false);
         optionsMenu.SetActive(false);
 
@@ -44,6 +45,7 @@ public class MenuGame : MonoBehaviour
 
     public void BackToMain()
     {
+        GameDataManager.ResetData();
         SceneManager.LoadScene("MainMenu");
         Time.timeScale = 1f;
     }

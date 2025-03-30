@@ -30,6 +30,9 @@ public class EnemyAi : MonoBehaviour
     public bool playerIsInAttackRange;
     public bool attack;
 
+    public AudioSource enemySound;
+    public AudioClip enemyPunchSound;
+
     public EnemyController enemyController;
 
     private void Awake()
@@ -136,6 +139,7 @@ public class EnemyAi : MonoBehaviour
 
     public void DamagePlayer()
     {
+        enemySound.PlayOneShot(enemyPunchSound);
         health.Health -= damage;
     }
 

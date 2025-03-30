@@ -20,6 +20,7 @@ public class WaveControl : MonoBehaviour
 
     public void Update()
     {
+        counter = damageCounter;
         if (damageCounter >= maxCounter)
         {
             message.SetActive(true);
@@ -27,6 +28,9 @@ public class WaveControl : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.F))
             {
                 SceneManager.LoadScene(scene);
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+                damageCounter = 0;
             }
         }
 

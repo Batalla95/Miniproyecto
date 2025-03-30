@@ -20,7 +20,11 @@ public class Key : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        message.SetActive(true);
-        canPick = true;
+        if (other.CompareTag("Player"))
+        {
+            message.SetActive(true);
+            canPick = true;
+        }
+        
     }
 }

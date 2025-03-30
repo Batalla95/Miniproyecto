@@ -35,6 +35,7 @@ public class MenuManager : MonoBehaviour
     {
         mainMenu.SetActive(true);
         optionsMenu.SetActive(false);
+        
     }
 
 

@@ -39,11 +39,25 @@ public class PlayerHealth : MonoBehaviour
                 vida.text = health + "/" + StartingHealth;
             }
 
+            GameDataManager.PlayerHealth = health;
         }
     }
 
     private void Start()
     {
-        Health = StartingHealth;
+        if (GameDataManager.PlayerHealth > 0)
+        {
+            health = GameDataManager.PlayerHealth;
+        }
+        else
+        {
+            health = StartingHealth;
+        }
+
+        if (vida != null)
+        {
+            vida.text = health + "/" + StartingHealth;
+        }
+
     }
 }

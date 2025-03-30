@@ -26,6 +26,8 @@ public class Gun : MonoBehaviour
     public AudioClip shoot;
     public AudioClip recharge;
 
+    
+
     public TMPro.TMP_Text ammo;
 
 
@@ -33,8 +35,17 @@ public class Gun : MonoBehaviour
     {
         CurrentCooldown = FireCooldown;
         CurrentRecharge = RechargeCooldown;
-        CurrentMaxAmmo = MaxAmmo;
-        CurrentMaxMag = MaxMag;
+        if (GameDataManager.CurrentAmmo > 0)
+        {
+            CurrentMaxAmmo = GameDataManager.CurrentAmmo;
+            CurrentMaxMag = GameDataManager.CurrentMag;
+        }
+        else
+        {
+            CurrentMaxAmmo = MaxAmmo;
+            CurrentMaxMag = MaxMag;
+        }
+
         gunFlash.SetActive(false);
         
         
@@ -103,6 +114,9 @@ public class Gun : MonoBehaviour
         {
             CurrentMaxAmmo = MaxAmmo;
         }
+
+        GameDataManager.CurrentAmmo = CurrentMaxAmmo;
+        GameDataManager.CurrentMag = CurrentMaxMag;
 
     }
 
